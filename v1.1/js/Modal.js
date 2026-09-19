@@ -79,7 +79,7 @@ function Modal(loopy){
 		label.style.fontSize = "18px";
 		label.style.marginTop = "6px";
 		label.style.color = "#777";
-		label.innerHTML = "need ideas for simulations? check out <span style='text-decoration:underline; cursor:pointer' onclick='publish(\"modal\",[\"examples\"])'>the examples!</span>";
+		label.innerHTML = "potřebuješ nápady na simulace? mrkni na <span style='text-decoration:underline; cursor:pointer' onclick='publish(\"modal\",[\"examples\"])'>příklady!</span>";
 		page.dom.appendChild(label);
 
 		self.addPage("howto", page);
@@ -106,7 +106,7 @@ function Modal(loopy){
 		page.width = 500;
 		page.height = 155;
 		page.addComponent(new ComponentHTML({
-			html: "copy your link:"
+			html: "zkopíruj svůj odkaz:"
 		}));
 		var output = page.addComponent(new ComponentOutput({}));
 
@@ -115,7 +115,7 @@ function Modal(loopy){
 		label.style.fontSize = "15px";
 		label.style.marginTop = "6px";
 		label.style.color = "#888";
-		label.innerHTML = "(this is a long URL, so you may want to use a link-shortener like <a target='_blank' href='https://bitly.com/'>bit.ly</a>)";
+		label.innerHTML = "(tohle je dlouhá URL, takže možná budeš chtít použít zkracovač odkazů jako <a target='_blank' href='https://bitly.com/'>bit.ly</a>)";
 		page.dom.appendChild(label);
 
 		// chars left...
@@ -124,7 +124,7 @@ function Modal(loopy){
 		chars.style.fontSize = "15px";
 		chars.style.marginTop = "3px";
 		chars.style.color = "#888";
-		chars.innerHTML = "X out of 2048 characters";
+		chars.innerHTML = "X z 2048 znaků";
 		page.dom.appendChild(chars);
 
 		page.onshow = function(){
@@ -135,9 +135,9 @@ function Modal(loopy){
 			output.dom.select();
 
 			// Chars left
-			var html = link.length+" / 2048 characters";
+			var html = link.length+" / 2048 znaků";
 			if(link.length>2048){
-				html += " - MAY BE TOO LONG FOR MOST BROWSERS";
+				html += " – MOŽNÁ PŘÍLIŠ DLOUHÉ PRO VĚTŠINU PROHLÍŽEČŮ";
 			}
 			chars.innerHTML = html;
 			chars.style.fontWeight = (link.length>2048) ? "bold" : "100";
@@ -171,13 +171,13 @@ function Modal(loopy){
 
 		// Label
 		var label = document.createElement("div");
-		label.innerHTML = "<br>PREVIEW &rarr;<br><br>";
+		label.innerHTML = "<br>NÁHLED &rarr;<br><br>";
 		sidebar.appendChild(label);
 
 		// Label 2
 		var label = document.createElement("div");
 		label.style.fontSize = "15px";
-		label.innerHTML = "what size do you want your embed to be?";
+		label.innerHTML = "jak velký má být vložený rámec?";
 		sidebar.appendChild(label);
 
 		// Size!
@@ -194,7 +194,7 @@ function Modal(loopy){
 		// Label 3
 		var label = document.createElement("div");
 		label.style.fontSize = "15px";
-		label.innerHTML = "<br><br>copy this code into your website's html:";
+		label.innerHTML = "<br><br>zkopíruj tento kód do HTML svého webu:";
 		sidebar.appendChild(label);
 
 		// Output!
@@ -206,7 +206,7 @@ function Modal(loopy){
 		var label = document.createElement("div");
 		label.style.fontSize = "15px";
 		label.style.textAlign = "right";
-		label.innerHTML = "<br><br>(note: the REMIX button lets someone else, well, remix your model! don't worry, it'll just be a copy, it won't affect the original.)";
+		label.innerHTML = "<br><br>(poznámka: tlačítko REMIX umožní někomu jinému, no, remixovat tvůj model! neboj, bude to jen kopie, originálu se to nedotkne.)";
 		sidebar.appendChild(label);
 
 		// IFRAME

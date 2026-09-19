@@ -59,28 +59,28 @@ function Toolbar(loopy){
 	// Populate those buttons!
 	self.addButton({
 		id: "ink",
-		tooltip: "PE(N)CIL",
+		tooltip: "TUŽKA (N)",
 		callback: function(){
 			self.setTool("ink");
 		}
 	});
 	self.addButton({
 		id: "label",
-		tooltip: "(T)EXT",
+		tooltip: "TEXT (T)",
 		callback: function(){
 			self.setTool("label");
 		}
 	});
 	self.addButton({
 		id: "drag",
-		tooltip: "MO(V)E",
+		tooltip: "PŘESUN (V)",
 		callback: function(){
 			self.setTool("drag");
 		}
 	});
 	self.addButton({
 		id: "erase",
-		tooltip: "(E)RASE",
+		tooltip: "GUMA (E)",
 		callback: function(){
 			self.setTool("erase");
 		}

@@ -30,7 +30,7 @@ function PlayControls(loopy){
 		// PLAY BUTTON
 		var buttonDOM = page.addComponent(new PlayButton({
 			icon: 0,
-			label: "Play",
+			label: "Spustit",
 			tooltip: isMacLike ? "⌘-Enter" : "control-enter",
 			onclick: function(){
 				loopy.setMode(Loopy.MODE_PLAY);
@@ -67,7 +67,7 @@ function PlayControls(loopy){
 			// REMIX BUTTON
 			var buttonDOM = page.addComponent(new PlayButton({
 				icon: 3,
-				label: "Remix",
+				label: "Remix",  // ponecháno – zavedený výraz
 				onclick: function(){
 					var url = loopy.saveToURL();
 					window.open(url,'_blank');
@@ -84,7 +84,7 @@ function PlayControls(loopy){
 			// STOP BUTTON
 			var buttonDOM = page.addComponent(new PlayButton({
 				icon: 1,
-				label: "Stop",
+				label: "Zastavit",
 				onclick: function(){
 					loopy.setMode(Loopy.MODE_EDIT);
 				}

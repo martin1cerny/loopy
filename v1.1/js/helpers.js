@@ -20,7 +20,7 @@ window.onresize = function(){
 
 window.onbeforeunload = function(e) {
 	if(loopy.dirty){
-		var dialogText = "Are you sure you want to leave without saving your changes?";
+		var dialogText = "Opravdu chceš odejít bez uložení svých změn?";
 		e.returnValue = dialogText;
 		return dialogText;
 	}

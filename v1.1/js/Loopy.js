@@ -142,7 +142,7 @@ function Loopy(config){
 	subscribe("export/file", function(){
 		var element = document.createElement('a');
 		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + self.model.serialize());
-		element.setAttribute('download', "system_model.loopy");
+		element.setAttribute('download', "model_systemu.loopy");
 
 		element.style.display = 'none';
 		document.body.appendChild(element);
