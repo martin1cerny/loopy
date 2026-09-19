@@ -65,6 +65,48 @@ Mouse.init = function(target){
 	// Add mouse & touch events!
 	_addMouseEvents(target, _onmousedown, _onmousemove, _onmouseup);
 
+	// Mouse-wheel: zoom the canvas, centered on the cursor.
+	var _onwheel = function(event){
+
+		// Only while editing, and never over an open modal.
+		if(!window.loopy) return;
+		if(loopy.mode!=Loopy.MODE_EDIT) return;
+		if(loopy.modal && loopy.modal.isShowing) return;
+
+		event.preventDefault();
+
+		// Normalise wheel delta (lines/pages -> approx pixels).
+		var dy = event.deltaY;
+		if(event.deltaMode==1) dy *= 33;
+		else if(event.deltaMode==2) dy *= (window.innerHeight||600);
+
+		// New scale (scroll up = zoom in), clamped to sane bounds.
+		var oldScale = loopy.offsetScale;
+		var newScale = oldScale * Math.pow(1.0015, -dy);
+		newScale = Math.max(0.2, Math.min(4, newScale));
+		if(newScale==oldScale) return;
+
+		// Cursor position, in the same CSS-pixel space as the inverse transform.
+		var ex = event.offsetX;
+		var ey = event.offsetY;
+
+		// Same centering constants as _onmousemove's inverse transform.
+		var canvasses = document.getElementById("canvasses");
+		var Kx = (canvasses.clientWidth - _PADDING - _PADDING + _PADDING)/2;
+		var Ky = (canvasses.clientHeight - _PADDING_BOTTOM - _PADDING + _PADDING)/2;
+
+		// Keep the model point under the cursor fixed:
+		// offset += (s_new - s_old)*(cursor - center), where s = 1/scale.
+		var sOld = 1/oldScale, sNew = 1/newScale;
+		loopy.offsetX += (sNew - sOld)*(ex - Kx);
+		loopy.offsetY += (sNew - sOld)*(ey - Ky);
+		loopy.offsetScale = newScale;
+
+		loopy.model.update(); // redraw
+
+	};
+	target.addEventListener("wheel", _onwheel, {passive:false});
+
 	// Cursor & Update
 	Mouse.target = target;
 	Mouse.showCursor = function(cursor){
