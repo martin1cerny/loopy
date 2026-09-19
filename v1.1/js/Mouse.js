@@ -43,6 +43,11 @@ Mouse.init = function(target){
 		Mouse.x = mx;
 		Mouse.y = my;
 
+		// Raw (un-transformed) pointer position, in canvas CSS pixels.
+		// Used for panning, which must be independent of the camera offset.
+		Mouse.rawX = event.x;
+		Mouse.rawY = event.y;
+
 		Mouse.moved = true;
 		publish("mousemove");
 

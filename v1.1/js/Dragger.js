@@ -14,6 +14,11 @@ function Dragger(loopy){
 	self.offsetX = 0;
 	self.offsetY = 0;
 
+	// Panning the whole canvas? (grabbing empty space)
+	self.panning = false;
+	self.panLastX = 0;
+	self.panLastY = 0;
+
 	subscribe("mousedown",function(){
 
 		// ONLY WHEN EDITING w DRAG
@@ -50,12 +55,35 @@ function Dragger(loopy){
 			return;
 		}
 
+		// Nothing under here: pan the whole canvas instead.
+		self.panning = true;
+		self.panLastX = Mouse.rawX;
+		self.panLastY = Mouse.rawY;
+
 	});
 	subscribe("mousemove",function(){
 
 		// ONLY WHEN EDITING w DRAG
 		if(self.loopy.mode!=Loopy.MODE_EDIT) return;
 		if(self.loopy.tool!=Loopy.TOOL_DRAG) return;
+
+		// If you're panning the canvas, move the camera around!
+		// Raw pointer deltas are converted to offset units (÷ scale) so the
+		// grabbed point stays under the cursor at any zoom level.
+		if(self.panning){
+			if(Mouse.rawX!==undefined){
+				// Only apply a delta once we have a seeded previous position,
+				// so the first frame can't jump by the full pointer coordinate.
+				if(isFinite(self.panLastX)){
+					loopy.offsetX += (Mouse.rawX - self.panLastX)/loopy.offsetScale;
+					loopy.offsetY += (Mouse.rawY - self.panLastY)/loopy.offsetScale;
+					loopy.model.update(); // redraw
+				}
+				self.panLastX = Mouse.rawX;
+				self.panLastY = Mouse.rawY;
+			}
+			return;
+		}
 
 		// If you're dragging a NODE, move it around!
 		if(self.dragging && self.dragging._CLASS_=="Node"){
@@ -147,6 +175,7 @@ function Dragger(loopy){
 		self.dragging = null;
 		self.offsetX = 0;
 		self.offsetY = 0;
+		self.panning = false;
 
 	});
 
