@@ -33,16 +33,41 @@ function Ink(loopy){
 		// Last point
 		var lastPoint = self.strokeData[self.strokeData.length-1];
 
+		// Match the model's camera transform (pan/zoom), so the trace lines up
+		// with the nodes it will become. Same math as Model.draw.
+		var loopy = self.loopy;
+		var canvasses = document.getElementById("canvasses");
+		var CW = canvasses.clientWidth - _PADDING - _PADDING;
+		var CH = canvasses.clientHeight - _PADDING_BOTTOM - _PADDING;
+		var s = loopy.offsetScale;
+		var tx = loopy.offsetX*2;
+		var ty = loopy.offsetY*2;
+		tx -= CW+_PADDING;
+		ty -= CH+_PADDING;
+		tx = s*tx;
+		ty = s*ty;
+		tx += CW+_PADDING;
+		ty += CH+_PADDING;
+		if(loopy.embedded){
+			tx += _PADDING;
+			ty += _PADDING;
+		}
+
+		ctx.save();
+		ctx.setTransform(s, 0, 0, s, tx, ty);
+
 		// Style
 		ctx.strokeStyle = "#ccc";
 		ctx.lineWidth = 5;
 		ctx.lineCap = "round";
 
-		// Draw line from last to current
+		// Draw line from last to current (in model space, ×2 for retina)
 		ctx.beginPath();
 		ctx.moveTo(lastPoint[0]*2, lastPoint[1]*2);
 		ctx.lineTo(Mouse.x*2, Mouse.y*2);
 		ctx.stroke();
+
+		ctx.restore();
 
 		// Update last point
 		self.strokeData.push([Mouse.x,Mouse.y]);
