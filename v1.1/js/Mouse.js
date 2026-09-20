@@ -102,7 +102,10 @@ Mouse.init = function(target){
 		loopy.offsetY += (sNew - sOld)*(ey - Ky);
 		loopy.offsetScale = newScale;
 
-		loopy.model.update(); // redraw
+		// Mark dirty AND keep the draw loop awake: a wheel fires no mousemove,
+		// so without this the draw countdown lapses and zooming freezes.
+		loopy.model.update();
+		publish("canvas/refresh");
 
 	};
 	target.addEventListener("wheel", _onwheel, {passive:false});

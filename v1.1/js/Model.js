@@ -177,6 +177,9 @@ function Model(loopy){
 	// OR RESIZE or RESET
 	subscribe("resize",function(){ drawCountdown=drawCountdownFull; });
 	subscribe("model/reset",function(){ drawCountdown=drawCountdownFull; });
+
+	// OR the camera moved (e.g. wheel-zoom, which fires no mousemove)
+	subscribe("canvas/refresh",function(){ drawCountdown=drawCountdownFull; });
 	subscribe("loopy/mode",function(){
 		if(loopy.mode==Loopy.MODE_PLAY){
 			drawCountdown=drawCountdownFull*2;
