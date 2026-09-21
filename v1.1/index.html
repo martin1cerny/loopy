@@ -30,7 +30,7 @@
 	<meta property="og:description" content="nástroj pro systémové myšlení">
 
     <!-- Styles! -->
-	<link href="css/loopy.css" rel="stylesheet"/>
+	<link href="css/loopy.css?v=cs1" rel="stylesheet"/>
 	<link href="css/balloon.css" rel="stylesheet"/>
 
 </head>
@@ -43,6 +43,7 @@
 	<div id="toolbar"></div>
 	<div id="playbar"></div>
 	<div id="sidebar"></div>
+	<div id="sidebar_toggle" title="Skrýt / zobrazit panel"></div>
 
 	<!-- MODAL -->
 	<div id="modal_container">
@@ -86,5 +87,17 @@
 <script>
 window.onload = function(){
 	window.loopy = new Loopy();
+
+	// Right panel: hide/show toggle (default open).
+	var toggle = document.getElementById("sidebar_toggle");
+	if(loopy.embedded){
+		toggle.style.display = "none"; // no sidebar in embed mode
+	}else{
+		toggle.onclick = function(){
+			var isHidden = document.body.getAttribute("sidebar")==="hidden";
+			document.body.setAttribute("sidebar", isHidden ? "shown" : "hidden");
+			publish("resize"); // canvas reclaims/releases the panel's width
+		};
+	}
 };
 </script>
